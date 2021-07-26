@@ -53,31 +53,31 @@ begin
 	p2TC = plotTC(df25, 190)
 	p3TC = plotTC(df51, 380)
 	p4TC = plotTC(df101, 760)
-	plot(p1TC, p2TC, p3TC, p4TC; layout=l)
+	plot(p1TC, p2TC, p3TC, p4TC; layout=l, legend=:outertopright)
 end
 
 # ╔═╡ 79505c68-7a15-4154-a6b7-1782d99a927d
 md"For all of the above graphs, we note that the data does not look quite nice.
-Instead, we'll adopt another method to check azeotropy---plotting ``x_1``
-against ``y_1``."
+Instead, we'll adopt another method to check azeotropy---plotting ``y_1``
+against ``x_1``."
 
 # ╔═╡ efe694aa-da4b-4a32-acda-6ab9c7ad06fd
 ## auxillary function to plot x1 against y1
 
-function plotXY(df::DataFrame, pressure::Int)
-	plot(df[!,:x1], df[!,:y1]; label="Data $(pressure)")
-	plot!(df[!,:x1], df[!,:x1]; linestyle=:dash, label=nothing)
+function plotXY(df::DataFrame, pressure::Int; color=:blue)
+	plot(df[!,:x1], df[!,:y1]; label="Data $(pressure)", color=color)
+	plot!(df[!,:x1], df[!,:x1]; linestyle=:dash, label=nothing, color=Symbol(:light, color))
 	plot!(;legend=:bottomright)
 end
 
 # ╔═╡ 73e361c2-a915-4d59-81c9-1b46060f59bd
 begin
 	l2 = @layout [a b; c d]
-	p1XY = plotXY(df13, 95)
-	p2XY = plotXY(df25, 190)
-	p3XY = plotXY(df51, 380)
-	p4XY = plotXY(df101, 760)
-	plot(p1XY, p2XY, p3XY, p4XY; layout=l2)
+	p1XY = plotXY(df13, 95; color=:green)
+	p2XY = plotXY(df25, 190; color=:blue)
+	p3XY = plotXY(df51, 380; color=:green)
+	p4XY = plotXY(df101, 760; color=:blue)
+	plot(p1XY, p2XY, p3XY, p4XY; layout=l2, legend=:outerbottomright)
 end
 
 # ╔═╡ 05124e4a-eba5-4cbe-a554-7c87b5d81c16

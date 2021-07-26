@@ -17,7 +17,7 @@ end
 using Plots; plotly()
 
 # ╔═╡ a9acb41c-ea24-11eb-0251-e59063682dff
-md"### Margules activity model simulation
+md"## Margules activity model simulation
 
 This notebook contains interactive scripts that can be used to
 demonstrate the effect of empirically fit Margules coefficients in
@@ -25,16 +25,17 @@ the activities of solutes in a liquid--liquid solution."
 
 # ╔═╡ cb4e8b32-5403-42e8-b65c-146972038f06
 md"We shall use sliders as below to indicate the Margules coefficients.
-The sliders are interactive! This means that plots and other cells will change 
+The sliders are interactive (when using `Pluto.jl`)! This means that plots and 
+other cells will change 
 according to these values when they change (as long as they depend on these).
 
 Here the slider directly below is of ``A_{12}`` and that below it is of ``A_{21}``."
 
 # ╔═╡ 8368f18c-e023-4f62-b61a-c279a56f9aa4
-@bind A12 html"<input type=range min=-5 max=5 step=0.1>"
+@bind A12 html"<input type=range min=-5 max=5 step=0.1 value=1.6>"
 
 # ╔═╡ 7a1bbf75-6e83-4687-a74b-f5933d91271c
-@bind A21 html"<input type=range min=-5 max=5 step=0.1>"
+@bind A21 html"<input type=range min=-5 max=5 step=0.1 value=0.8>"
 
 # ╔═╡ fbef9641-6d02-43ff-adc1-e9095c29dc98
 md"The value of ``A_{12}`` is $(A12).
@@ -108,12 +109,14 @@ L1_vp = 0.08 * 101.325
 L2_vp = 0.03 * 101.325
 
 # ╔═╡ 5aa30f25-7847-4325-aec5-344113b20942
-md"We introduce a functions to calculate the partial pressures of both ethanol
+md"We introduce functions to calculate the partial pressures of both ethanol
 and water at a given composition.
 
 This way, the total pressure contributed by the two components can be calculated
 and their respective partial pressure fractions. We first plot partial pressures
-against concentration."
+against the mole fraction of the first liquid.
+
+The dashed lines represent predictions assuming Raoult's law (``A_{12}=A_{21}=0``)."
 
 # ╔═╡ ff5c8a3c-adcd-4a34-bfb4-5cba4e39df29
 P_1(x1) = x1 * L1_vp * γ1(x1)
@@ -123,10 +126,16 @@ P_2(x1) = (1-x1) * L2_vp * γ2(x1)
 
 # ╔═╡ 99be8b37-3f7a-4464-b48c-7f63f0efce6a
 begin
-	plot(xs, P_1.(xs); label="Liquid 1")
-	plot!(xs, xs .* L1_vp; label=nothing, linestyle=:dash)
-	plot!(xs, P_2.(xs); label="Liquid 2")
-	plot!(xs, (1 .- xs) .* L2_vp; label=nothing, linestyle=:dash)
+	plot(xs, P_1.(xs); label="Liquid 1", color=:blue)
+	plot!(xs, xs .* L1_vp; label=nothing, linestyle=:dash, color=:blue)
+	
+	plot!(xs, P_2.(xs); label="Liquid 2", color=:green)
+	plot!(xs, @. (1-xs) * L2_vp; label=nothing, linestyle=:dash, color=:green)
+	
+	plot!(xs, @. P_1(xs) + P_2(xs); label="Total", color=:red)
+	plot!(xs, @. L2_vp + (L1_vp-L2_vp)*xs; label=nothing, linestyle=:dash, color=:red)
+	
+	plot!(;legend=:outertopright)
 end
 
 # ╔═╡ f8c94908-e0ed-4b01-91b5-bc1ce447dece
@@ -974,7 +983,7 @@ version = "0.9.1+5"
 # ╟─5aa30f25-7847-4325-aec5-344113b20942
 # ╠═ff5c8a3c-adcd-4a34-bfb4-5cba4e39df29
 # ╠═c8e86b62-203c-4d43-a94e-85851ff83fb0
-# ╟─99be8b37-3f7a-4464-b48c-7f63f0efce6a
+# ╠═99be8b37-3f7a-4464-b48c-7f63f0efce6a
 # ╟─f8c94908-e0ed-4b01-91b5-bc1ce447dece
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
