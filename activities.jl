@@ -4,17 +4,11 @@
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
-        el
-    end
-end
-
 # ╔═╡ 617733c8-005d-42c4-a6d2-eef31cd5cc4e
 using Plots; plotly()
+
+# ╔═╡ 2e583a99-df0a-4ceb-9b11-e16f873fad1c
+using CSV, DataFrames
 
 # ╔═╡ a9acb41c-ea24-11eb-0251-e59063682dff
 md"## Margules activity model simulation
@@ -23,26 +17,15 @@ This notebook contains interactive scripts that can be used to
 demonstrate the effect of empirically fit Margules coefficients in
 the activities of solutes in a liquid--liquid solution."
 
+# ╔═╡ cdf685d7-3853-4594-b22e-211c12a3123a
+# auxiliary truncation function
+sf5(x) = trunc(x; sigdigits=5);
+
 # ╔═╡ cb4e8b32-5403-42e8-b65c-146972038f06
 md"We shall use sliders as below to indicate the Margules coefficients.
 The sliders are interactive (when using `Pluto.jl`)! This means that plots and 
 other cells will change 
-according to these values when they change (as long as they depend on these).
-
-Here the slider directly below is of ``A_{12}`` and that below it is of ``A_{21}``."
-
-# ╔═╡ 8368f18c-e023-4f62-b61a-c279a56f9aa4
-@bind A12 html"<input type=range min=-5 max=5 step=0.1 value=1.6>"
-
-# ╔═╡ 7a1bbf75-6e83-4687-a74b-f5933d91271c
-@bind A21 html"<input type=range min=-5 max=5 step=0.1 value=0.8>"
-
-# ╔═╡ fbef9641-6d02-43ff-adc1-e9095c29dc98
-md"The value of ``A_{12}`` is $(A12).
-The value of ``A_{21}`` is $(A21).
-
-The example in the article uses the liquid pair ethanol--water in its
-discussion. The Margules coefficients are ``A_{12}=1.6022,A_{21}=0.7947``."
+according to these values when they change (as long as they depend on these)."
 
 # ╔═╡ 797bad99-5473-48de-b3f2-74d628288262
 md"For this notebook, we'll use the `plotly` backend of `Plots.jl` for plotting."
@@ -67,6 +50,17 @@ md"According to the Margules activity model, the activity coefficients are
 
 Please see the article for the derivation. These equations can be expressed in code
 as follows:"
+
+# ╔═╡ bd967384-0e9f-429d-a787-357e6cba5154
+begin
+	A21 = 0.2714; A12 = 0.6906;
+end
+
+# ╔═╡ d53c9b12-5d3c-4575-863e-4d80278ea9f5
+md"For the simulations, we can use the following values for ``A_{12} =`` $(A12) and 
+``A_{21} =`` $(A21), which are fitted values at a _constant temperature_ 50C. 
+Note that  changing these values will also change the plots below as they depend on 
+these values."
 
 # ╔═╡ 26eaa135-8afe-4e02-ad65-074dfcad1ad1
 ## for the parameters we'll use the values from the sliders.
@@ -98,15 +92,36 @@ pressures at a particular composition to their vapor pressure of the pure liquid
 We further note that all values are greater than or equal to 1 at any composition.
 This means that the attractive forces are always overpowered by repulsion."
 
-# ╔═╡ 93b33b58-b6f6-496c-85f1-eb86e5c7f66f
-md"We use the following values for the vapor pressures at ``25^\circ\mathrm C``.
-The units are in kPa (bars)."
+# ╔═╡ efddcd98-d542-429f-80a1-58251dab84e1
+md"In order to calculate the vapor pressures at certain temperatures. We use the
+Antoine equations.
+
+To do this, we can use data from literature."
+
+# ╔═╡ 05944cab-2759-481b-8aa5-759a7ecbc103
+begin
+	df_antoine = CSV.File("data/ethanol-water/antoine.csv") |> DataFrame;
+	antoine_ethanol = df_antoine[1,:];
+	antoine_water = df_antoine[2,:];
+	## auxiliary function to calculate vapor pressure given temperature
+	antoinePress(T, A, B, C) = 10^(A - B/(T+C))
+end
+
+# ╔═╡ 17d8c4de-99fc-40c8-ac48-9050eafa6164
+T = 50
 
 # ╔═╡ 5ba8b18e-9962-4f9c-b1bf-578b0c6e8a9f
-L1_vp = 0.08 * 101.325
+begin
+	L1_vp = antoinePress(T, antoine_ethanol...);
+	L2_vp = antoinePress(T, antoine_water...);
+end
 
-# ╔═╡ 879b6e40-0b76-4102-8a4c-fc72d44e13a4
-L2_vp = 0.03 * 101.325
+# ╔═╡ 77cfbba5-6323-4fa4-a534-3de2911db8d0
+md"The vapor pressures of ethanol and water at certain temperatures can be calculated
+as follows.
+
+As an example, at $(T)C, the pressures in torr are $(sf5(L1_vp)) and $(sf5(L2_vp)),
+respectively. The values reflect the temperature (if using the notebook version)."
 
 # ╔═╡ 5aa30f25-7847-4325-aec5-344113b20942
 md"We introduce functions to calculate the partial pressures of both ethanol
@@ -143,8 +158,8 @@ md"Feel free to change the values of the vapor pressures and Margules coefficien
 At the same time, observe the changes in the plot above caused by the changes.
 
 !!! note
-	Changing values may take some time due to `Pluto.jl` binding and it may be faster
-	to set the values manually instead.
+	Changing margules coefficient ``A_{21},A_{12}`` values may take some time due to
+	`Pluto.jl` binding and it may be faster to set the values manually instead.
 
 
 If we go back to the original example of the ethanol--water mixture, we note the
@@ -153,9 +168,13 @@ positive deviation from Raoult's law (given by the dashed lines)."
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 
 [compat]
+CSV = "~0.8.5"
+DataFrames = "~1.2.1"
 Plots = "~1.19.3"
 """
 
@@ -183,6 +202,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "c3598e525718abcc440f69cc6d5f60dda0a1b61e"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
 version = "1.0.6+5"
+
+[[CSV]]
+deps = ["Dates", "Mmap", "Parsers", "PooledArrays", "SentinelArrays", "Tables", "Unicode"]
+git-tree-sha1 = "b83aa3f513be680454437a0eee21001607e5d983"
+uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+version = "0.8.5"
 
 [[Cairo_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
@@ -224,10 +249,21 @@ git-tree-sha1 = "9f02045d934dc030edad45944ea80dbd1f0ebea7"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.5.7"
 
+[[Crayons]]
+git-tree-sha1 = "3f71217b538d7aaee0b69ab47d9b7724ca8afa0d"
+uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+version = "4.0.4"
+
 [[DataAPI]]
 git-tree-sha1 = "ee400abb2298bd13bfc3df1c412ed228061a2385"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.7.0"
+
+[[DataFrames]]
+deps = ["Compat", "DataAPI", "Future", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrettyTables", "Printf", "REPL", "Reexport", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
+git-tree-sha1 = "a19645616f37a2c2c3077a44bc0d3e73e13441d7"
+uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+version = "1.2.1"
 
 [[DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
@@ -310,6 +346,10 @@ git-tree-sha1 = "aa31987c2ba8704e23c6c8ba8a4f769d5d7e4f91"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.10+0"
 
+[[Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
+
 [[GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pkg", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
 git-tree-sha1 = "dba1e8614e98949abfa60480b13653813d8f0157"
@@ -366,6 +406,12 @@ version = "0.5.0"
 [[InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[InvertedIndices]]
+deps = ["Test"]
+git-tree-sha1 = "15732c475062348b0165684ffe28e85ea8396afc"
+uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
+version = "1.0.0"
 
 [[IterTools]]
 git-tree-sha1 = "05110a2ab1fc5f932622ffea2a003221f4782c18"
@@ -606,11 +652,23 @@ git-tree-sha1 = "1bbbb5670223d48e124b388dee62477480e23234"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 version = "1.19.3"
 
+[[PooledArrays]]
+deps = ["DataAPI", "Future"]
+git-tree-sha1 = "cde4ce9d6f33219465b55162811d8de8139c0414"
+uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
+version = "1.2.1"
+
 [[Preferences]]
 deps = ["TOML"]
 git-tree-sha1 = "00cfd92944ca9c760982747e9a1d0d5d86ab1e5a"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
 version = "1.2.2"
+
+[[PrettyTables]]
+deps = ["Crayons", "Formatting", "Markdown", "Reexport", "Tables"]
+git-tree-sha1 = "0d1245a357cc61c8cd61934c07447aa569ff22e6"
+uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+version = "1.1.0"
 
 [[Printf]]
 deps = ["Unicode"]
@@ -660,6 +718,12 @@ deps = ["Dates"]
 git-tree-sha1 = "0b4b7f1393cff97c33891da2a0bf69c6ed241fda"
 uuid = "6c6a2e73-6563-6170-7368-637461726353"
 version = "1.1.0"
+
+[[SentinelArrays]]
+deps = ["Dates", "Random"]
+git-tree-sha1 = "35927c2c11da0a86bcd482464b93dadd09ce420f"
+uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
+version = "1.3.5"
 
 [[Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -963,23 +1027,26 @@ version = "0.9.1+5"
 
 # ╔═╡ Cell order:
 # ╟─a9acb41c-ea24-11eb-0251-e59063682dff
+# ╟─cdf685d7-3853-4594-b22e-211c12a3123a
 # ╟─cb4e8b32-5403-42e8-b65c-146972038f06
-# ╠═8368f18c-e023-4f62-b61a-c279a56f9aa4
-# ╠═7a1bbf75-6e83-4687-a74b-f5933d91271c
-# ╟─fbef9641-6d02-43ff-adc1-e9095c29dc98
 # ╟─797bad99-5473-48de-b3f2-74d628288262
 # ╠═617733c8-005d-42c4-a6d2-eef31cd5cc4e
 # ╟─3c4858a1-659e-4eca-9395-7fcf88dffb55
 # ╟─c8200eda-2d86-44dc-8cc1-106fec074c12
 # ╟─66c5d8ed-6f9a-432f-983f-f6b911a25350
+# ╟─d53c9b12-5d3c-4575-863e-4d80278ea9f5
+# ╠═bd967384-0e9f-429d-a787-357e6cba5154
 # ╠═26eaa135-8afe-4e02-ad65-074dfcad1ad1
 # ╠═f7ecc91a-9f2a-4f35-ad5d-05c66c793cca
 # ╟─597996d7-0e92-464a-be25-5ec929ef2e95
 # ╠═c97662e7-37fa-4bf8-8f7c-c0c7d4d67cfb
 # ╟─0b71121e-acf6-40cc-8c3f-5e55b5ab0d19
-# ╟─93b33b58-b6f6-496c-85f1-eb86e5c7f66f
+# ╟─efddcd98-d542-429f-80a1-58251dab84e1
+# ╠═2e583a99-df0a-4ceb-9b11-e16f873fad1c
+# ╠═05944cab-2759-481b-8aa5-759a7ecbc103
+# ╟─77cfbba5-6323-4fa4-a534-3de2911db8d0
+# ╠═17d8c4de-99fc-40c8-ac48-9050eafa6164
 # ╠═5ba8b18e-9962-4f9c-b1bf-578b0c6e8a9f
-# ╠═879b6e40-0b76-4102-8a4c-fc72d44e13a4
 # ╟─5aa30f25-7847-4325-aec5-344113b20942
 # ╠═ff5c8a3c-adcd-4a34-bfb4-5cba4e39df29
 # ╠═c8e86b62-203c-4d43-a94e-85851ff83fb0
