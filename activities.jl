@@ -21,12 +21,6 @@ the activities of solutes in a liquid--liquid solution."
 # auxiliary truncation function
 sf5(x) = trunc(x; sigdigits=5);
 
-# ╔═╡ cb4e8b32-5403-42e8-b65c-146972038f06
-md"We shall use sliders as below to indicate the Margules coefficients.
-The sliders are interactive (when using `Pluto.jl`)! This means that plots and 
-other cells will change 
-according to these values when they change (as long as they depend on these)."
-
 # ╔═╡ 797bad99-5473-48de-b3f2-74d628288262
 md"For this notebook, we'll use the `plotly` backend of `Plots.jl` for plotting."
 
@@ -53,12 +47,12 @@ as follows:"
 
 # ╔═╡ bd967384-0e9f-429d-a787-357e6cba5154
 begin
-	A21 = 0.2714; A12 = 0.6906;
+	A21 = 0.9459; A12 = 1.5009;
 end
 
 # ╔═╡ d53c9b12-5d3c-4575-863e-4d80278ea9f5
 md"For the simulations, we can use the following values for ``A_{12} =`` $(A12) and 
-``A_{21} =`` $(A21), which are fitted values at a _constant temperature_ 50C. 
+``A_{21} =`` $(A21), which are fitted values at a _constant temperature_ 30C. 
 Note that  changing these values will also change the plots below as they depend on 
 these values."
 
@@ -86,7 +80,7 @@ begin
 end
 
 # ╔═╡ 0b71121e-acf6-40cc-8c3f-5e55b5ab0d19
-md"These should be exactly the same as the ratios ``P/P^*`` of the partial vapor
+md"These should be exactly the same as the ratios ``y_iP/x_iP^*`` of the partial vapor
 pressures at a particular composition to their vapor pressure of the pure liquid.
 
 We further note that all values are greater than or equal to 1 at any composition.
@@ -108,7 +102,7 @@ begin
 end
 
 # ╔═╡ 17d8c4de-99fc-40c8-ac48-9050eafa6164
-T = 50
+T = 30
 
 # ╔═╡ 5ba8b18e-9962-4f9c-b1bf-578b0c6e8a9f
 begin
@@ -164,6 +158,16 @@ At the same time, observe the changes in the plot above caused by the changes.
 
 If we go back to the original example of the ethanol--water mixture, we note the
 positive deviation from Raoult's law (given by the dashed lines)."
+
+# ╔═╡ 6f823a6d-e834-4a98-ba60-cd9c237adf6f
+md"In addition to the positive deviation, there seems to exist a point where the
+total vapor pressure is maximum. 
+This only occurs when there is sufficient positive
+deviation if we suppose that ``P`` is a continuous function of ``x_1``. Another
+simplifying precondition would then be that the liquid pair is miscible in all
+proportions.
+
+Given the resolution of the points, the maximum occurs at ``x_1 \approx 0.95``."
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1028,7 +1032,6 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─a9acb41c-ea24-11eb-0251-e59063682dff
 # ╟─cdf685d7-3853-4594-b22e-211c12a3123a
-# ╟─cb4e8b32-5403-42e8-b65c-146972038f06
 # ╟─797bad99-5473-48de-b3f2-74d628288262
 # ╠═617733c8-005d-42c4-a6d2-eef31cd5cc4e
 # ╟─3c4858a1-659e-4eca-9395-7fcf88dffb55
@@ -1052,5 +1055,6 @@ version = "0.9.1+5"
 # ╠═c8e86b62-203c-4d43-a94e-85851ff83fb0
 # ╠═99be8b37-3f7a-4464-b48c-7f63f0efce6a
 # ╟─f8c94908-e0ed-4b01-91b5-bc1ce447dece
+# ╟─6f823a6d-e834-4a98-ba60-cd9c237adf6f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
