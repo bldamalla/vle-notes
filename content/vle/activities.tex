@@ -1,0 +1,75 @@
+\section{Derivation of activity coefficients}
+
+Using the excess free energy function given by the Margules activity model, 
+it is possible to calculate the activity coefficients if we consider the 
+following
+\begin{align*}
+    \frac1{RT} G^E = x_1\ln\gamma_1 + x_2\ln\gamma_2 &\implies
+    \frac1{RT}n G^E = n_1\ln\gamma_1 + n_2\ln\gamma_2 \\ &\implies
+    \ln\gamma_1 = \frac1{RT} \pdv{G^E}{n_1},
+\end{align*}
+and similarly
+\[
+    \ln\gamma_2 = \frac1{RT} \pdv{G^E}{n_2}.
+\]
+
+So that an interpretation of the activity coefficients in non-ideal mixtures is
+that they are contributions to excess free energies as amounts of components change.
+With this, it is then reasonable to assume that activity coefficients depend on
+the mole fraction of components in a mixture.
+
+Plugging in the excess function (Equation~\ref{eq:margules-two-param}) into the
+equations above, we can obtain $\ln\gamma_1$
+\stepcounter{equation}
+\begin{align*}\label{eq:margules-act-1}
+    \ln\gamma_1 &= \pdv{n_1} \qty[\dfrac{A_{21}n_1n_2^2}{n^2} + 
+    \dfrac{A_{12}n_1n_2^2}{n^2}] \\
+    &= \dfrac{2A_{21}n_1n_2n^2}{n^4} - \dfrac{2A_{21}n_1^2n_2}{n^4} +
+    \dfrac{A_{12}n_2^2n^2}{n^4} - \dfrac{2A_{12}n_1n_2^2n}{n^4} \\
+    &= 2A_{21}x_1x_2(1-x_1) + A_{12}x_2^2 - 2A_{12}x_1x_2^2 \\
+    &= x_2^2 \qty[A_{12} + 2(A_{21} - A_{12})x_1]. \tag{\theequation}
+\end{align*}
+Similarly,
+\begin{equation}\label{eq:margules-act-2}
+    \ln\gamma_2 = x_1^2 \qty[A_{21} + 2(A_{12} - A_{21})x_2].
+\end{equation}
+As mentioned, the activity coefficients of the components depend on the mole 
+fractions of the component in the liquid phase.
+
+By subtracting the two equations we obtain the logarithm of the ratio of activity
+coefficients of the two components of the system at a given composition, temperature
+and pressure
+\begin{equation}\label{eq:act-diff}
+    \ln\dfrac{\gamma_1}{\gamma_2} = A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
+    (A_{21} - A_{12})(x_2 - x_1).
+\end{equation}
+
+In practice, it is sometimes easier to calculate the parameters $A_{xx}$ based on
+measurements of the activity coefficients from vapor--liquid equilibrium (VLE) data 
+using Equation~\ref{eq:act-diff} and this was done in collections of \citeA{haladat}.
+
+However, in the cited collection above, the expression for 
+$\ln\frac{\gamma_1}{\gamma_2}$ used to fit the parameters is slightly different
+\[
+    \ln\dfrac{\gamma_1}{\gamma_2} = \ln 10 \cdot
+    \log \dfrac{\gamma_1}{\gamma_2} = A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
+    (A_{12} - A_{21}).
+\]
+
+The book by \citeA[pp.~430]{enggbook} also suggests a method to calculate $A_{xx}$
+based on the activity coefficients, which are based on directly solving
+Equations~\ref{eq:margules-act-1} and \ref{eq:margules-act-2} yielding:
+\[
+    A_{12} = \qty(2 - \frac1{x_2}) \dfrac{\ln\gamma_1}{x_2} + 
+    \dfrac{2\ln\gamma_2}{x_1},\qquad
+    A_{21} = \qty(2 - \frac1{x_1}) \dfrac{\ln\gamma_2}{x_1} + 
+    \dfrac{2\ln\gamma_1}{x_2}.
+\]
+These expressions can be used to calculate the coefficients using \textit{any} point
+on phase diagrams, as long as activity coefficients can be derived. It must be noted,
+however that values calculated at a single point may not necessarily 
+reflect values for the whole range due to experimental errors.
+
+With this, we employed nonlinear curve fitting methods to calculate $A_{xx}$ from 
+constant-temperature VLE data from literature (primarily those in a collection of 
+\citeA{wichtdat}). These were then used to describe systems at those temperatures.
