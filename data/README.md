@@ -11,7 +11,7 @@ temperature measurements are in Celsius.
 
 Filenames starting with `T` are measured at a constant temperature. 
 They are followed by the temperature (T/C) in which it is measured. In this
-case, pressure measurements are in bars.
+case, pressure measurements are in kPa.
 
 Data References:
 
