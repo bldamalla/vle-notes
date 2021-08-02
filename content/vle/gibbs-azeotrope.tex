@@ -1,0 +1,70 @@
+\section{Fitting and azeotrope description}
+
+As an example, we fitted data on direct vapor pressure measurements of
+an ethanol--water mixture at \SI{30}{\celsius}. It was found that the
+fitted constants have values $A_{21}=0.9459$ and $A_{12}=1.5009$.
+For details on fitting see Supporting Information.
+
+These parameters can then be used to create a pressure--composition plot
+showing the total pressure as a function of liquid phase ethanol mole 
+fraction (Figure~\ref{fig:press-plot}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.5]{figs/press.png}
+    \caption{Vapor pressures as a function of liquid phase ethanol molar composition.
+    A magnified section is also included to emphasize that maximal vapor pressure
+    does not occur at ethanol saturation, but rather at $x_1\approx 0.95$.}
+    \label{fig:press-plot}
+\end{figure}
+
+It can be seen from the magnified section of the figure that there appears to
+be a maximum vapor pressure that is greater than the saturation vapor pressure
+of ethanol. At this point, an increase in concentration of ethanol does not
+increase the vapor pressure of the whole system
+\begin{equation}\label{eq:press-derv}
+    \dv{P}{x_1} = \dv{P_1}{x_1} + \dv{P_2}{x_1} = 0,
+\end{equation}
+where $P_1$ and $P_2$ are the partial vapor pressures of the ethanol and
+water, respectively. It must also be noted that 
+\[
+    x_1 + x_2 = 1 \implies \dv{x_2}{x_1} = -1 
+    \implies \dv{P_2}{x_2} = \dv{P_2}{x_1} \cdot \dv{x_2}{x_1} =
+    -\dv{P_2}{x_1}.
+\]
+So that Equation~\ref{eq:press-derv} can be reexpressed as
+\begin{equation}\label{eq:press-derv2}
+    \dv{P}{x_1} = \dv{P_1}{x_1} - \dv{P_2}{x_2} = 0 \implies
+    \dv{P_1}{x_1} = \dv{P_2}{x_2}.
+\end{equation}
+
+The Gibbs--Duhem equation for a binary mixture at a given temperature and
+pressure is relates the chemical potentials of components in a phase as
+\begin{equation}\label{eq:gibbs-duhem}
+    n_1\dd{\mu_1} + n_2 \dd{\mu_2} = 0
+\end{equation}
+\cite[p.~439]{enggbook}.
+In vapor--liquid equilibrium (VLE), the chemical potentials of the liquid
+and gaseous phases of each component should be equal. Using $\mu = \mu^\circ
++ RT \ln(P/P^*)$, where $P^*$ is the saturation vapor pressure of a
+component, we find that
+\begin{equation}\label{eq:gibbs-duhem2}
+    n_1 \dv{\mu_1}{x_1} + n_2 \dv{\mu_2}{x_1} = 0 \implies
+    nRT \qty[ \dfrac{x_1}{P_1} \dv{P_1}{x_1} + \dfrac{x_2}{P_2} \dv{P_2}{x_1} ] = 0
+    \implies \dfrac{x_1}{P_1} \dv{P_1}{x_1} = \dfrac{x_2}{P_2} \dv{P_2}{x_2}.
+\end{equation}
+
+Combining Equations~\ref{eq:press-derv2} and \ref{eq:gibbs-duhem2} we obtain
+\[
+    \dfrac{x_1}{P_1} = \dfrac{x_2}{P_2}
+\]
+From here, we can define a partial pressure fraction $y_i$ such that $y_i
+\equiv P_i/P$. This transforms the equation above to
+\begin{equation}\label{eq:azeotrope}
+    \dfrac{x_1}{y_1} = \dfrac{x_2}{y_2} = \dfrac{x_1 + x_2}{y_1 + y_2} = 1
+    \implies x_1 = y_1,\quad x_2 = y_2.
+\end{equation}
+This point in the phase diagram represents a point wherein the liquid
+composition is the same as the vapor composition. This is the condition
+for an azeotrope \cite[p.~394]{enggbook}. 
+In this case, a maximum pressure azeotrope was described.
