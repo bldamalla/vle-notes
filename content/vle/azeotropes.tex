@@ -1,0 +1,49 @@
+\section{More on azeotropes}
+
+\paragraph{Assumptions}
+So far, the introduction of the concept of azeotropes using the Margules
+activity model rests upon two assumptions. A first assumption is that it
+is physical in the sense that it agrees with the Gibbs--Duhem equation
+(Equation~\ref{eq:gibbs-duhem}). As it turns out, commonly used activity 
+models follow the relation \cite[p.~440]{enggbook}. Also, for an
+activity model to make sense, it must indeed follow the relation.
+
+The second assumption so far is that the vapor pressure is a continuous function
+of composition. This means that there is no liquid--liquid phase separation
+in all compositions---liquids are miscible.
+
+\paragraph{Calculation from constants}
+With Equation~\ref{eq:azeotrope} at the azeotrope, we have that
+\[
+    y_1P = x_1\gamma_1P_1^* \implies \ln\gamma_1 = \ln \dfrac{P}{P_1^*}.
+\]
+Similarly
+\[
+    \ln\gamma_2 = \ln \dfrac{P}{P_2^*}.
+\]
+Subtracting these two equations we have
+\begin{equation}\label{eq:act-diff2}
+    \ln \dfrac{\gamma_1}{\gamma_2} = \ln \dfrac{P_2^*}{P_1^*}.
+\end{equation}
+
+Direct comparison with Equation~\ref{eq:act-diff} gives
+\begin{equation}\label{eq:azeo-master}
+    \ln \dfrac{P_2^*}{P_1^*} = A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
+    (A_{21} - A_{12})(x_2 - x_1),
+\end{equation}
+which is a polynomial (cubic) equation in $x_1$. In principle, this is
+solvable if there is sufficient information: $A_{xx}$ and
+saturation vapor pressures of the components are known. For the case of
+the ethanol--water mixture at \SI{30}{\celsius}, it occurs at $x_1 = 0.9476$.
+
+Another form of Equation~\ref{eq:azeo-master} can be obtained if we let
+\[
+    \alpha = 2A_{21} - A_{12},\qquad \beta = -2(A_{21} - A_{12}),\qquad
+    x_2 = 1 - x_1
+\]
+in Equations~\ref{eq:margules-act-1} and \ref{eq:margules-act-2} as
+\begin{equation}\label{eq:azeo-master2}
+    \ln \dfrac{P_2^*}{P_1^*} = \alpha[1 - 2x_1] + \beta[\frac32 x_1^2 - 
+    3x_1 + 1],
+\end{equation}
+which is a quadratic equation in $x_1$.

@@ -41,7 +41,7 @@ coefficients of the two components of the system at a given composition, tempera
 and pressure
 \begin{equation}\label{eq:act-diff}
     \ln\dfrac{\gamma_1}{\gamma_2} = A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
-    (A_{21} - A_{12})(x_2 - x_1).
+    (A_{21} - A_{12})(x_1 - x_2).
 \end{equation}
 
 In practice, it is sometimes easier to calculate the parameters $A_{xx}$ based on
@@ -52,8 +52,8 @@ However, in the cited collection above, the expression for
 $\ln\frac{\gamma_1}{\gamma_2}$ used to fit the parameters is slightly different
 \[
     \ln\dfrac{\gamma_1}{\gamma_2} = \ln 10 \cdot
-    \log \dfrac{\gamma_1}{\gamma_2} = A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
-    (A_{12} - A_{21}).
+    \log \dfrac{\gamma_1}{\gamma_2} = \ln 10 \qty[ A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
+    (A_{12} - A_{21}) ].
 \]
 
 The book by \citeA[pp.~430]{enggbook} also suggests a method to calculate $A_{xx}$
