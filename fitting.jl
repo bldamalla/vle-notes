@@ -1,19 +1,3 @@
-## for fitting margules coefficients from data
-
-γ1(x1, A21, A12) = exp((A12 + 2(A21 - A12)*x1) * (1-x1)^2)
-γ2(x1, A21, A12) = exp((A21 + 2(A12 - A21)*(1-x1)) * x1^2)
-
-## be careful of the units
-antoine_vp(T, A, B, C) = 10^(A - B/(T+C))
-
-## load the antoine coefficients
-using CSV, DataFrames
-
-# these were apparently calibrated using C and mmHg
-df_antoine = CSV.File("data/ethanol-water/antoine.csv") |> DataFrame
-antoine_ethanol = collect(df_antoine[1,:])
-antoine_water = collect(df_antoine[2,:])
-
 ## TODO: HANDLING CONSTANT TEMPERATURE data
 # in this case, the saturation vapor pressures are constant
 # so all that has to be done is to fit parameters by least
@@ -23,6 +7,8 @@ antoine_water = collect(df_antoine[2,:])
 
 # for the constant temperature dataset starting params
 A0 = [1.5, 1.5]
+
+include("base.jl")
 
 function pressure(x1;
             T=30,
