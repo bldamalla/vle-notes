@@ -11,9 +11,11 @@ using CSV, DataFrames
 
 # these were apparently calibrated using C and mmHg
 df_antoine = CSV.File("data/ethanol-water/antoine.csv") |> DataFrame
-antoine_ethanol = collect(df_antoine[1,:])
-antoine_water = collect(df_antoine[2,:])
+antoine_ethanol1 = collect(df_antoine[1,:])
+antoine_ethanol2 = collect(df_antoine[2,:])
+antoine_water1 = collect(df_antoine[3,:])
+antoine_water2 = collect(df_antoine[4,:])
 
-# vapor pressures
-ethanol_satvp = antoine_vp(30, antoine_ethanol...)
-water_satvp = antoine_vp(30, antoine_water...)
+# vapor pressures at 30C
+ethanol_satvp = antoine_vp(30, antoine_ethanol1...)
+water_satvp = antoine_vp(30, antoine_water1...)
