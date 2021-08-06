@@ -2,8 +2,8 @@
 
 \paragraph{Assumptions}
 So far, the introduction of the concept of azeotropes using the Margules
-activity model rests upon two assumptions. A first assumption is that it
-is physical in the sense that it agrees with the Gibbs--Duhem equation
+activity model rests upon two assumptions. A first assumption is that the
+activity model is physical such that it agrees with the Gibbs--Duhem equation
 (Equation~\ref{eq:gibbs-duhem}). As it turns out, commonly used activity 
 models follow the relation \cite[p.~440]{enggbook}. Also, for an
 activity model to make sense, it must indeed follow the relation.
@@ -34,7 +34,8 @@ Direct comparison with Equation~\ref{eq:act-diff} gives
 which is a polynomial (cubic) equation in $x_1$. In principle, this is
 solvable if there is sufficient information: $A_{xx}$ and
 saturation vapor pressures of the components are known. For the case of
-the ethanol--water mixture at \SI{30}{\celsius}, it occurs at $x_1 = 0.9476$.
+the ethanol--water mixture at \SI{30}{\celsius}, it occurs at $x_1 = 0.9476$
+with the azeotropic pressure as \SI{}{\mmHg}.
 
 Another form of Equation~\ref{eq:azeo-master} can be obtained if we let
 \[
@@ -43,7 +44,68 @@ Another form of Equation~\ref{eq:azeo-master} can be obtained if we let
 \]
 in Equations~\ref{eq:margules-act-1} and \ref{eq:margules-act-2} as
 \begin{equation}\label{eq:azeo-master2}
-    \ln \dfrac{P_2^*}{P_1^*} = \alpha[1 - 2x_1] + \beta[\frac32 x_1^2 - 
-    3x_1 + 1],
+    \ln \dfrac{P_2^*(T)}{P_1^*(T)} = \alpha[1 - 2x_1] + \beta\qty[\frac32 x_1^2
+    -3x_1 + 1],
 \end{equation}
-which is a quadratic equation in $x_1$.
+which is a quadratic equation in $x_1$ and can be solved directly.
+
+\paragraph{Other plots}
+
+%% TODO: ADD HERE THE OTHER PLOTS AND OTHER COMMENTS
+Using the fitted values for $A_{xx}$ in Table~\ref{tab:fits},
+pressure--composition plots were also made for higher temperatures
+(Figure~\ref{fig:press-high}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.4]{./figs/pressT50.png}
+    \includegraphics[scale=0.4]{./figs/pressT90.png}
+    \includegraphics[scale=0.4]{./figs/pressT150.png}
+    \caption{Vapor pressures at constant temperatures as functions of 
+    liquid ethanol composition. Upper left: \SI{50}{\celsius}; upper
+    right: \SI{90}{\celsius}; bottom: \SI{150}{\celsius}. It can be seen
+    that there are azeotropes based on the model.
+    Azeotropes are around $x_1 \approx 0.93, 0.95, 0.84$, respectively.}
+    \label{fig:press-high}
+\end{figure}
+
+Upon closer inspection of the plot for $T=\SI{90}{\celsius}$ in 
+Figure~\ref{fig:press-high}. It can be seen that the composition at 
+maximal vapor pressure from data ($x_1\approx 0.865$) does not agree well 
+with the calculated composition by the activity model. This is can be 
+attributed to errors from fitting. Also, by inspection the azeotrope ethanol 
+composition ought to be lower than calculated.
+
+By solving Equation~\ref{eq:azeo-master2}, azeotropes compositions $x_{az}$
+can be obtained (Table~\ref{tab:azeo}) and used to calculate azeotropic data
+such as pressure $P_{az}$ and temperature $T_{az}$.
+
+\begin{table}[ht]
+    \centering
+    \caption{Calculated azeotropic data for ethanol--water binary mixture
+    using the activty model. $T_{az}$ and $P_{az}$ are the azeotropic
+    temperatures and pressures, respectively. The compositions $x_{az}=
+    y_{az}$ are of ethanol. The last entries are of an observed azeotrope
+    for the ethanol--water mixture at atmospheric pressure.}
+    \medskip
+    \begin{tabular}{ccc}
+        $T_{az}$ (\si{\celsius}) & $P_{az}$ (\si{\mmHg}) & $x_{az}$ \\ \hline
+        \num{30} & \num{78.195} & \num{0.9476} \\
+        \num{50} & \num{220.635} & \num{0.9294} \\
+        \num{90} & \num{1189.652} & \num{0.9447} \\
+        \num{150} & \num{7425.300} & \num{0.8412} \\
+        \hline
+        \num{78.17} & \num{760} & \num{0.904}
+    \end{tabular}
+    \label{tab:azeo}
+\end{table}
+
+A general decrease of ethanol composition at the azeotrope can be generally
+observed as the temperature increases. It is also the case that azeotropic
+pressure increases with temperature. From these, it is expected that since
+atmospheric pressure is much closer to \SI{221}{\mmHg} than to \SI{1190}
+{\mmHg}, then the azeotrope temperature is closer to \SI{50}{\celsius} than
+to \SI{90}{\celsius}. The same can be said of ethanol composition.
+
+Azeotrope data \cite[p.~331]{crc} in Table~\ref{tab:azeo} seems to agree 
+with this argument.

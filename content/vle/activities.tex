@@ -46,14 +46,14 @@ and pressure
 
 In practice, it is sometimes easier to calculate the parameters $A_{xx}$ based on
 measurements of the activity coefficients from vapor--liquid equilibrium (VLE) data 
-using Equation~\ref{eq:act-diff} and this was done in collections of \citeA{haladat}.
+using Equation~\ref{eq:act-diff} and this was done in collections of 
+\citeA[p.~4]{haladat}.
 
 However, in the cited collection above, the expression for 
 $\ln\frac{\gamma_1}{\gamma_2}$ used to fit the parameters is slightly different
 \[
-    \ln\dfrac{\gamma_1}{\gamma_2} = \ln 10 \cdot
-    \log \dfrac{\gamma_1}{\gamma_2} = \ln 10 \qty[ A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
-    (A_{12} - A_{21}) ].
+    \log_{10} \dfrac{\gamma_1}{\gamma_2} =  A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
+    (A_{12} - A_{21}).
 \]
 
 The book by \citeA[pp.~430]{enggbook} also suggests a method to calculate $A_{xx}$
@@ -71,5 +71,29 @@ however that values calculated at a single point may not necessarily
 reflect values for the whole range due to experimental errors.
 
 With this, we employed nonlinear curve fitting methods to calculate $A_{xx}$ from 
-constant-temperature VLE data from literature (primarily those in a collection of 
-\citeA{wichtdat}). These were then used to describe systems at those temperatures.
+constant-temperature VLE data from literature \cite{wichtdat}. 
+These were then used to describe systems at those temperatures.
+Data from the mentioned source are arranged by file numbers. Table~\ref{tab:fits}
+contains the fitted Margules coefficients at temperatures along with respective 
+data set file numbers.
+
+Due to the least squares fitting method, the norm of the residuals is
+minimized so there might be some deviations from the data and important behavior
+may be lost.
+
+\begin{table}[ht]
+    \centering
+    \caption{Fitted Margules coefficients for constant-temperature VLE data.
+    Maximum percent deviation is that of total vapor pressures calculated using
+    the activity model.}
+    \medskip
+    \begin{tabular}{c|cc|c|c}
+        Temperature (\si{\celsius}) & $A_{21}$ & $A_{12}$ & Maximum 
+        percent deviation & File number \\ \hline
+        \num{30} & $0.9459$ & $1.5009$ & $1.29\%$ & \textbf{LB0601} \\
+        \num{50} & $0.9114$ & $1.6022$ & $1.00\%$ & \textbf{LB0868} \\
+        \num{90} & $0.8311$ & $1.5988$ & $3.85\%$ & \textbf{LB2298} \\
+        \num{150} & $0.8139$ & $1.5027$ & $3.80\%$ & \textbf{LB2298}
+    \end{tabular}
+    \label{tab:fits}
+\end{table}
