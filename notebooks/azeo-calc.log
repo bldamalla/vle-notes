@@ -16,13 +16,20 @@ Results of Nonlinear Solver Algorithm
 
 Polynomial equation solver solution:
 [0.9476449443165835, 1.5219405272473527]
+Pressure: 78.19506882733855
 
 Polynomial equation solver solutions for higher temperatures:
 ---------
 
 Calculations for 50C:
 [0.9293866940425681, 1.2834077822871437]
+Pressure: 220.63497142271518
+
 Calculations for 90C:
 [0.9446624762537871, 1.1104767983752506]
+Pressure: 1189.6521249088723
+
 Calculations for 150C:
 [0.8412940606581741, 1.3188299694250838]
+Pressure: 7425.3001746769405
+

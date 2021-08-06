@@ -11,6 +11,16 @@ An = [
 
 include("base.jl")
 
+## calculate vapor pressure at temperature
+function pressure(x; T=30,
+        antoine_l1=antoine_ethanol1,
+        antoine_l2=antoine_water1,
+        A=An)
+    l1_vp = antoine_vp(T, antoine_l1...)
+    l2_vp = antoine_vp(T, antoine_l2...)
+    return x * γ1(x, A...) * l1_vp + (1-x) * γ2(x, A...) * l2_vp
+end
+
 println("Calculations for 30C:")
 println("---------\n")
 
@@ -44,18 +54,32 @@ end
 
 solution2 = roots(master_eq2(@view An[:,1]))
 println("Polynomial equation solver solution:")
-println(solution2,'\n')
+println(solution2)
+println("Pressure: ", pressure(solution2[1]; A=@view An[:,1]), '\n')
 
 ## use the polynomial solver for the rest of the calculations
 println("Polynomial equation solver solutions for higher temperatures:")
 println("---------\n")
 
 println("Calculations for 50C:")
-println(roots(master_eq2(@view An[:,2]; T=50)))
+T50 = roots(master_eq2(@view An[:,2]; T=50))
+println(T50)
+println("Pressure: ", pressure(T50[1]; T=50, A=@view An[:,2]), '\n')
+
 println("Calculations for 90C:")
-println(roots(master_eq2(@view An[:,3]; T=90,
-                antoine_l1=antoine_ethanol2)))
-println("Calculations for 150C:")
-println(roots(master_eq2(@view An[:,4]; T=150,
+T90 = roots(master_eq2(@view An[:,3]; T=90,
+                antoine_l1=antoine_ethanol2))
+println(T90)
+println("Pressure: ", pressure(T90[1]; T=90,
                 antoine_l1=antoine_ethanol2,
-                antoine_l2=antoine_water2)))
+                A=@view An[:,3]), '\n')
+
+println("Calculations for 150C:")
+T150 = roots(master_eq2(@view An[:,4]; T=150,
+                antoine_l1=antoine_ethanol2,
+                antoine_l2=antoine_water2))
+println(T150)
+println("Pressure: ", pressure(T150[1]; T=150,
+                antoine_l1=antoine_ethanol2,
+                antoine_l2=antoine_water2,
+                A=@view An[:,4]), '\n')
