@@ -1,0 +1,28 @@
+Calculations for 30C:
+---------
+
+Nonlinear equation solver solution:
+Results of Nonlinear Solver Algorithm
+ * Algorithm: Newton with line-search
+ * Starting Point: [1.0]
+ * Zero: [0.9476449443165843]
+ * Inf-norm of residuals: 0.000000
+ * Iterations: 4
+ * Convergence: true
+   * |x - x'| < 0.0e+00: false
+   * |f(x)| < 1.0e-08: true
+ * Function Calls (f): 5
+ * Jacobian Calls (df/dx): 5
+
+Polynomial equation solver solution:
+[0.9476449443165835, 1.5219405272473527]
+
+Polynomial equation solver solutions for higher temperatures:
+---------
+
+Calculations for 50C:
+[0.9293866940425681, 1.2834077822871437]
+Calculations for 90C:
+[0.9446624762537871, 1.1104767983752506]
+Calculations for 150C:
+[0.8412940606581741, 1.3188299694250838]
