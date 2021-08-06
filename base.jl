@@ -15,7 +15,3 @@ antoine_ethanol1 = collect(df_antoine[1,:])
 antoine_ethanol2 = collect(df_antoine[2,:])
 antoine_water1 = collect(df_antoine[3,:])
 antoine_water2 = collect(df_antoine[4,:])
-
-# vapor pressures at 30C
-ethanol_satvp = antoine_vp(30, antoine_ethanol1...)
-water_satvp = antoine_vp(30, antoine_water1...)

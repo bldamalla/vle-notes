@@ -1,7 +1,7 @@
-## figs/press.jl
+## figs/pressT50.jl
 
-# fixed temp margules parameters at 30C
-A21=0.9459; A12=1.5009;
+# fixed temp margules parameters at 50C
+A21=0.9114; A12=1.6022;
 A = [A21, A12];
 
 ## range and resolution of plotting area
@@ -14,12 +14,12 @@ function pressure(x1)
         (1-x1) * water_satvp * γ2(x1, A...)
 end
 
-df_press = CSV.File("data/ethanol-water/T30.csv") |> DataFrame
+df_press = CSV.File("data/ethanol-water/T50_2.csv") |> DataFrame
 xdata = collect(df_press[!,:x1])
 Pdata = collect(df_press[!,:P]) .* (760 / 101.325)
 
-ethanol_satvp = antoine_vp(30, antoine_ethanol1...)
-water_satvp = antoine_vp(30, antoine_water1...)
+ethanol_satvp = antoine_vp(50, antoine_ethanol1...)
+water_satvp = antoine_vp(50, antoine_water1...)
 
 using Plots; gr()
 
@@ -36,8 +36,8 @@ plot!([0,1], [ethanol_satvp, ethanol_satvp]; linestyle=:dot, label="EtOH sat pre
 xlabel!("Liquid ethanol mole fraction")
 ylabel!("Total vapor pressure (mmHg)")
 
-lens!([0.9, 1], [77, 79], inset=(1, bbox(0.60, 0.33, 0.3, 0.3)))
+lens!([0.875, 1], [210, 230], inset=(1, bbox(0.60, 0.33, 0.3, 0.3)))
 
 plot!(;legend=:outertopright)
 
-savefig("figs/press.png")
+savefig("figs/pressT50.png")
