@@ -35,21 +35,22 @@ which is a polynomial (cubic) equation in $x_1$. In principle, this is
 solvable if there is sufficient information: $A_{xx}$ and
 saturation vapor pressures of the components are known. For the case of
 the ethanol--water mixture at \SI{30}{\celsius}, it occurs at $x_1 = 0.9476$
-with the azeotropic pressure as \SI{}{\mmHg}.
+with the azeotropic pressure as \SI{78.195}{\mmHg}.
 
 Another form of Equation~\ref{eq:azeo-master} can be obtained if we let
 \[
     \alpha = 2A_{21} - A_{12},\qquad \beta = -2(A_{21} - A_{12}),\qquad
     x_2 = 1 - x_1
 \]
-in Equations~\ref{eq:margules-act-1} and \ref{eq:margules-act-2} as
+in Equations~\ref{eq:margules-act-1} and \ref{eq:margules-act-2} followed by
+subtraction. Using the substitutions we obtain,
 \begin{equation}\label{eq:azeo-master2}
     \ln \dfrac{P_2^*(T)}{P_1^*(T)} = \alpha[1 - 2x_1] + \beta\qty[\frac32 x_1^2
     -3x_1 + 1],
 \end{equation}
 which is a quadratic equation in $x_1$ and can be solved directly.
 
-\paragraph{Other plots}
+\paragraph{Other azeotropes and observations}
 
 %% TODO: ADD HERE THE OTHER PLOTS AND OTHER COMMENTS
 Using the fitted values for $A_{xx}$ in Table~\ref{tab:fits},
@@ -65,7 +66,7 @@ pressure--composition plots were also made for higher temperatures
     liquid ethanol composition. Upper left: \SI{50}{\celsius}; upper
     right: \SI{90}{\celsius}; bottom: \SI{150}{\celsius}. It can be seen
     that there are azeotropes based on the model.
-    Azeotropes are around $x_1 \approx 0.93, 0.95, 0.84$, respectively.}
+    Calculated azeotropes are around $x_1 \approx 0.93, 0.95, 0.84$, respectively.}
     \label{fig:press-high}
 \end{figure}
 
@@ -76,7 +77,7 @@ with the calculated composition by the activity model. This is can be
 attributed to errors from fitting. Also, by inspection the azeotrope ethanol 
 composition ought to be lower than calculated.
 
-By solving Equation~\ref{eq:azeo-master2}, azeotropes compositions $x_{az}$
+By solving Equation~\ref{eq:azeo-master2}, azeotrope compositions $x_{az}$
 can be obtained (Table~\ref{tab:azeo}) and used to calculate azeotropic data
 such as pressure $P_{az}$ and temperature $T_{az}$.
 
@@ -107,5 +108,5 @@ atmospheric pressure is much closer to \SI{221}{\mmHg} than to \SI{1190}
 {\mmHg}, then the azeotrope temperature is closer to \SI{50}{\celsius} than
 to \SI{90}{\celsius}. The same can be said of ethanol composition.
 
-Azeotrope data \cite[p.~331]{crc} in Table~\ref{tab:azeo} seems to agree 
-with this argument.
+Azeotrope data \cite[p.~331]{crc} in Table~\ref{tab:azeo} at atmospheric pressure
+seems to agree with this argument.

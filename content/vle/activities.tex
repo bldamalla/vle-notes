@@ -6,11 +6,11 @@ following
 \begin{align*}
     \frac1{RT} G^E = x_1\ln\gamma_1 + x_2\ln\gamma_2 &\implies
     \frac1{RT}n G^E = n_1\ln\gamma_1 + n_2\ln\gamma_2 \\ &\implies
-    \ln\gamma_1 = \frac1{RT} \pdv{G^E}{n_1},
+    \ln\gamma_1 = \frac1{RT} \pdv{nG^E}{n_1},
 \end{align*}
 and similarly
 \[
-    \ln\gamma_2 = \frac1{RT} \pdv{G^E}{n_2}.
+    \ln\gamma_2 = \frac1{RT} \pdv{nG^E}{n_2}.
 \]
 
 So that an interpretation of the activity coefficients in non-ideal mixtures is
@@ -34,10 +34,10 @@ Similarly,
     \ln\gamma_2 = x_1^2 \qty[A_{21} + 2(A_{12} - A_{21})x_2].
 \end{equation}
 As mentioned, the activity coefficients of the components depend on the mole 
-fractions of the component in the liquid phase.
+fractions of the components in the liquid phase.
 
 By subtracting the two equations we obtain the logarithm of the ratio of activity
-coefficients of the two components of the system at a given composition, temperature
+coefficients of the two components of the system at a given composition, temperature,
 and pressure
 \begin{equation}\label{eq:act-diff}
     \ln\dfrac{\gamma_1}{\gamma_2} = A_{12}x_2^2 - A_{21}x_1^2 - 2x_1x_2
@@ -46,8 +46,7 @@ and pressure
 
 In practice, it is sometimes easier to calculate the parameters $A_{xx}$ based on
 measurements of the activity coefficients from vapor--liquid equilibrium (VLE) data 
-using Equation~\ref{eq:act-diff} and this was done in collections of 
-\citeA[p.~4]{haladat}.
+using Equation~\ref{eq:act-diff} as was done in collections of \citeA[p.~4]{haladat}.
 
 However, in the cited collection above, the expression for 
 $\ln\frac{\gamma_1}{\gamma_2}$ used to fit the parameters is slightly different
@@ -56,7 +55,7 @@ $\ln\frac{\gamma_1}{\gamma_2}$ used to fit the parameters is slightly different
     (A_{12} - A_{21}).
 \]
 
-The book by \citeA[pp.~430]{enggbook} also suggests a method to calculate $A_{xx}$
+\citeA[pp.~430]{enggbook} also suggest a method to calculate $A_{xx}$
 based on the activity coefficients, which are based on directly solving
 Equations~\ref{eq:margules-act-1} and \ref{eq:margules-act-2} yielding:
 \[
@@ -78,8 +77,8 @@ contains the fitted Margules coefficients at temperatures along with respective
 data set file numbers.
 
 Due to the least squares fitting method, the norm of the residuals is
-minimized so there might be some deviations from the data and important behavior
-may be lost.
+minimized, so there might be some deviations from vapor pressure data and 
+important behavior may be lost.
 
 \begin{table}[ht]
     \centering
